@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blog-post",
     "pluralName": "blog-posts",
-    "displayName": "blogPost"
+    "displayName": "blogPost",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,17 +26,15 @@
       "type": "richtext"
     },
     "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
-    },
-    "category": {
-      "type": "string"
+      ]
     },
     "author": {
       "type": "string"
@@ -53,6 +52,12 @@
       "type": "component",
       "repeatable": false,
       "component": "sections.seo"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::blog-category.blog-category",
+      "inversedBy": "blog_posts"
     }
   }
 }
