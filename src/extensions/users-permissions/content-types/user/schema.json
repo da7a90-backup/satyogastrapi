@@ -76,8 +76,8 @@
       "enum": [
         "NONE",
         "GYANI",
-        "VIGYANI",
-        "PRAGYANI"
+        "PRAGYANI",
+        "PRAGYANIPLUS"
       ]
     },
     "membershipstartdate": {
@@ -93,6 +93,9 @@
         "INACTIVE",
         "TRIALING"
       ]
+    },
+    "isAdmin": {
+      "type": "boolean"
     }
   }
 }

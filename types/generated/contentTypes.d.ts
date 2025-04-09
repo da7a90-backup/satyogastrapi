@@ -725,10 +725,13 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     firstname: Attribute.String;
     lastname: Attribute.String;
-    membership: Attribute.Enumeration<['NONE', 'GYANI', 'VIGYANI', 'PRAGYANI']>;
+    membership: Attribute.Enumeration<
+      ['NONE', 'GYANI', 'PRAGYANI', 'PRAGYANIPLUS']
+    >;
     membershipstartdate: Attribute.DateTime;
     membershipenddate: Attribute.DateTime;
     membershipstatus: Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'TRIALING']>;
+    isAdmin: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
