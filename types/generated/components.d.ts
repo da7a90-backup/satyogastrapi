@@ -1,5 +1,23 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface ContentClassContent extends Schema.Component {
+  collectionName: 'components_content_class_contents';
+  info: {
+    displayName: 'class_content';
+    icon: 'briefcase';
+  };
+  attributes: {
+    video: Attribute.Media;
+    videoTitle: Attribute.String;
+    videoDescription: Attribute.Text;
+    videoTranscript: Attribute.Text;
+    videoAudioFile: Attribute.Media;
+    keyConcepts: Attribute.RichText;
+    writingPrompts: Attribute.RichText;
+    additionalMaterials: Attribute.Component<'sections.additional-materials'>;
+  };
+}
+
 export interface SectionsAdditionalMaterials extends Schema.Component {
   collectionName: 'components_sections_additional_materials';
   info: {
@@ -36,6 +54,41 @@ export interface SectionsContentSection extends Schema.Component {
     backgroundImage: Attribute.Media;
     buttons: Attribute.Component<'sections.button', true>;
     content: Attribute.RichText;
+  };
+}
+
+export interface SectionsCourseFeatures extends Schema.Component {
+  collectionName: 'components_sections_course_features';
+  info: {
+    displayName: 'course_features';
+    icon: 'bulletList';
+  };
+  attributes: {
+    videoClasses: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    guidedMeditations: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    studyMaterials: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    supportInfo: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    curriculumAids: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
   };
 }
 
@@ -78,6 +131,23 @@ export interface SectionsFeature extends Schema.Component {
   };
 }
 
+export interface SectionsFeaturedQuote extends Schema.Component {
+  collectionName: 'components_sections_featured_quotes';
+  info: {
+    displayName: 'featured_quote';
+    icon: 'discuss';
+  };
+  attributes: {
+    authorName: Attribute.String & Attribute.Required;
+    authorImage: Attribute.Media;
+    quoteText: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+  };
+}
+
 export interface SectionsHeroSection extends Schema.Component {
   collectionName: 'components_sections_hero_sections';
   info: {
@@ -89,6 +159,23 @@ export interface SectionsHeroSection extends Schema.Component {
     buttonText: Attribute.String;
     buttonLink: Attribute.String;
     backgroundImage: Attribute.Media;
+  };
+}
+
+export interface SectionsLearningPoints extends Schema.Component {
+  collectionName: 'components_sections_learning_points';
+  info: {
+    displayName: 'learning_points';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    description: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
   };
 }
 
@@ -150,13 +237,17 @@ export interface SectionsTab extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'content.class-content': ContentClassContent;
       'sections.additional-materials': SectionsAdditionalMaterials;
       'sections.button': SectionsButton;
       'sections.content-section': SectionsContentSection;
+      'sections.course-features': SectionsCourseFeatures;
       'sections.cta-section': SectionsCtaSection;
       'sections.duration': SectionsDuration;
       'sections.feature': SectionsFeature;
+      'sections.featured-quote': SectionsFeaturedQuote;
       'sections.hero-section': SectionsHeroSection;
+      'sections.learning-points': SectionsLearningPoints;
       'sections.learning-tabs-section': SectionsLearningTabsSection;
       'sections.seo': SectionsSeo;
       'sections.social-links': SectionsSocialLinks;

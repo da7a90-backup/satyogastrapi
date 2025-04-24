@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_content_class_contents",
+  "info": {
+    "displayName": "class_content",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "video": {
+      "allowedTypes": [
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "videoTitle": {
+      "type": "string"
+    },
+    "videoDescription": {
+      "type": "text"
+    },
+    "videoTranscript": {
+      "type": "text"
+    },
+    "videoAudioFile": {
+      "allowedTypes": [
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "keyConcepts": {
+      "type": "richtext"
+    },
+    "writingPrompts": {
+      "type": "richtext"
+    },
+    "additionalMaterials": {
+      "type": "component",
+      "repeatable": false,
+      "component": "sections.additional-materials"
+    }
+  }
+}

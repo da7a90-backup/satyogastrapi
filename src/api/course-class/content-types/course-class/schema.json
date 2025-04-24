@@ -4,7 +4,8 @@
   "info": {
     "singularName": "course-class",
     "pluralName": "course-classes",
-    "displayName": "CourseClass"
+    "displayName": "CourseClass",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -26,11 +27,12 @@
       "target": "api::course.course",
       "inversedBy": "course_classes"
     },
-    "class_content": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::class-content.class-content",
-      "mappedBy": "course_class"
+    "classContent": {
+      "displayName": "class_content",
+      "type": "component",
+      "repeatable": false,
+      "component": "content.class-content",
+      "required": true
     }
   }
 }

@@ -879,49 +879,6 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
-export interface ApiClassContentClassContent extends Schema.CollectionType {
-  collectionName: 'class_contents';
-  info: {
-    singularName: 'class-content';
-    pluralName: 'class-contents';
-    displayName: 'ClassContent';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    video: Attribute.Media;
-    videoTitle: Attribute.String;
-    videoDescription: Attribute.Text;
-    videoTranscript: Attribute.Text;
-    videoAudioFile: Attribute.Media;
-    keyConcepts: Attribute.RichText;
-    writingPrompts: Attribute.RichText;
-    course_class: Attribute.Relation<
-      'api::class-content.class-content',
-      'oneToOne',
-      'api::course-class.course-class'
-    >;
-    additionalMaterials: Attribute.Component<'sections.additional-materials'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::class-content.class-content',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::class-content.class-content',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiCourseCourse extends Schema.CollectionType {
   collectionName: 'courses';
   info: {
@@ -936,7 +893,6 @@ export interface ApiCourseCourse extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     slug: Attribute.UID<'api::course.course', 'title'>;
-    description: Attribute.Blocks;
     price: Attribute.Float;
     free: Attribute.Boolean;
     featuredImage: Attribute.Media;
@@ -950,8 +906,21 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'manyToMany',
       'api::instructor.instructor'
     >;
-    startDate: Attribute.Date;
-    endDate: Attribute.Date;
+    startDate: Attribute.Date & Attribute.Required;
+    endDate: Attribute.Date & Attribute.Required;
+    description: Attribute.RichText & Attribute.Required;
+    whatYouWillLearn: Attribute.Component<'sections.learning-points', true> &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          max: 5;
+        },
+        number
+      >;
+    courseFeatures: Attribute.Component<'sections.course-features'> &
+      Attribute.Required;
+    previewMedia: Attribute.Media;
+    featuredQuote: Attribute.Component<'sections.featured-quote'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -976,6 +945,7 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
     singularName: 'course-class';
     pluralName: 'course-classes';
     displayName: 'CourseClass';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -989,11 +959,8 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
       'manyToOne',
       'api::course.course'
     >;
-    class_content: Attribute.Relation<
-      'api::course-class.course-class',
-      'oneToOne',
-      'api::class-content.class-content'
-    >;
+    classContent: Attribute.Component<'content.class-content'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1710,11 +1677,6 @@ export interface ApiUserCommentUserComment extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     >;
-    related_class_content: Attribute.Relation<
-      'api::user-comment.user-comment',
-      'oneToOne',
-      'api::class-content.class-content'
-    >;
     timestamp: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1754,7 +1716,6 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::blog-category.blog-category': ApiBlogCategoryBlogCategory;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
-      'api::class-content.class-content': ApiClassContentClassContent;
       'api::course.course': ApiCourseCourse;
       'api::course-class.course-class': ApiCourseClassCourseClass;
       'api::event.event': ApiEventEvent;
