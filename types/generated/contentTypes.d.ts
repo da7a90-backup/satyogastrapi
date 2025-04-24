@@ -879,6 +879,59 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiContactFormContactForm extends Schema.CollectionType {
+  collectionName: 'contact_forms';
+  info: {
+    singularName: 'contact-form';
+    pluralName: 'contact-forms';
+    displayName: 'contact form';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    firstName: Attribute.String & Attribute.Required;
+    lastName: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    topic: Attribute.Enumeration<
+      [
+        'General Inquiry',
+        'Retreats',
+        'Membership',
+        'Online Courses',
+        'Donation',
+        'Payment',
+        'Store',
+        'Other'
+      ]
+    >;
+    message: Attribute.Text & Attribute.Required;
+    agreedToPrivacyPolicy: Attribute.Boolean &
+      Attribute.Required &
+      Attribute.DefaultTo<true>;
+    status: Attribute.Enumeration<
+      ['New', 'In Progress', 'Responded', 'Closed']
+    > &
+      Attribute.DefaultTo<'New'>;
+    adminNotes: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-form.contact-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-form.contact-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Schema.CollectionType {
   collectionName: 'events';
   info: {
@@ -1538,6 +1591,7 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::blog-category.blog-category': ApiBlogCategoryBlogCategory;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::contact-form.contact-form': ApiContactFormContactForm;
       'api::event.event': ApiEventEvent;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::program-date.program-date': ApiProgramDateProgramDate;
