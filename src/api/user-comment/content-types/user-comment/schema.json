@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_comments",
+  "info": {
+    "singularName": "user-comment",
+    "pluralName": "user-comments",
+    "displayName": "UserComment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "text"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
+    },
+    "related_class_content": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::class-content.class-content"
+    },
+    "timestamp": {
+      "type": "datetime"
+    }
+  }
+}

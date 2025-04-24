@@ -1,5 +1,17 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface SectionsAdditionalMaterials extends Schema.Component {
+  collectionName: 'components_sections_additional_materials';
+  info: {
+    displayName: 'additionalMaterials';
+  };
+  attributes: {
+    video: Attribute.Media;
+    essay: Attribute.RichText;
+    guidedMeditation: Attribute.Media;
+  };
+}
+
 export interface SectionsButton extends Schema.Component {
   collectionName: 'components_sections_buttons';
   info: {
@@ -138,6 +150,7 @@ export interface SectionsTab extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'sections.additional-materials': SectionsAdditionalMaterials;
       'sections.button': SectionsButton;
       'sections.content-section': SectionsContentSection;
       'sections.cta-section': SectionsCtaSection;

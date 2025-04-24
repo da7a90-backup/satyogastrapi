@@ -879,6 +879,139 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiClassContentClassContent extends Schema.CollectionType {
+  collectionName: 'class_contents';
+  info: {
+    singularName: 'class-content';
+    pluralName: 'class-contents';
+    displayName: 'ClassContent';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    video: Attribute.Media;
+    videoTitle: Attribute.String;
+    videoDescription: Attribute.Text;
+    videoTranscript: Attribute.Text;
+    videoAudioFile: Attribute.Media;
+    keyConcepts: Attribute.RichText;
+    writingPrompts: Attribute.RichText;
+    course_class: Attribute.Relation<
+      'api::class-content.class-content',
+      'oneToOne',
+      'api::course-class.course-class'
+    >;
+    additionalMaterials: Attribute.Component<'sections.additional-materials'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::class-content.class-content',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::class-content.class-content',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseCourse extends Schema.CollectionType {
+  collectionName: 'courses';
+  info: {
+    singularName: 'course';
+    pluralName: 'courses';
+    displayName: 'Course';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    slug: Attribute.UID<'api::course.course', 'title'>;
+    description: Attribute.Blocks;
+    price: Attribute.Float;
+    free: Attribute.Boolean;
+    featuredImage: Attribute.Media;
+    course_classes: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::course-class.course-class'
+    >;
+    instructors: Attribute.Relation<
+      'api::course.course',
+      'manyToMany',
+      'api::instructor.instructor'
+    >;
+    startDate: Attribute.Date;
+    endDate: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course.course',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course.course',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseClassCourseClass extends Schema.CollectionType {
+  collectionName: 'course_classes';
+  info: {
+    singularName: 'course-class';
+    pluralName: 'course-classes';
+    displayName: 'CourseClass';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    inClassPosition: Attribute.Integer;
+    duration: Attribute.BigInteger;
+    course: Attribute.Relation<
+      'api::course-class.course-class',
+      'manyToOne',
+      'api::course.course'
+    >;
+    class_content: Attribute.Relation<
+      'api::course-class.course-class',
+      'oneToOne',
+      'api::class-content.class-content'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course-class.course-class',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course-class.course-class',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Schema.CollectionType {
   collectionName: 'events';
   info: {
@@ -953,6 +1086,47 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::home-page.home-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiInstructorInstructor extends Schema.CollectionType {
+  collectionName: 'instructors';
+  info: {
+    singularName: 'instructor';
+    pluralName: 'instructors';
+    displayName: 'Instructor';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    title: Attribute.String;
+    bio: Attribute.Text;
+    email: Attribute.Email;
+    website: Attribute.String;
+    courses: Attribute.Relation<
+      'api::instructor.instructor',
+      'manyToMany',
+      'api::course.course'
+    >;
+    picture: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::instructor.instructor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::instructor.instructor',
       'oneToOne',
       'admin::user'
     > &
@@ -1518,6 +1692,48 @@ export interface ApiRetreatApplicationRetreatApplication
   };
 }
 
+export interface ApiUserCommentUserComment extends Schema.CollectionType {
+  collectionName: 'user_comments';
+  info: {
+    singularName: 'user-comment';
+    pluralName: 'user-comments';
+    displayName: 'UserComment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.Text;
+    author: Attribute.Relation<
+      'api::user-comment.user-comment',
+      'oneToOne',
+      'admin::user'
+    >;
+    related_class_content: Attribute.Relation<
+      'api::user-comment.user-comment',
+      'oneToOne',
+      'api::class-content.class-content'
+    >;
+    timestamp: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-comment.user-comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-comment.user-comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1538,10 +1754,15 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::blog-category.blog-category': ApiBlogCategoryBlogCategory;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::class-content.class-content': ApiClassContentClassContent;
+      'api::course.course': ApiCourseCourse;
+      'api::course-class.course-class': ApiCourseClassCourseClass;
       'api::event.event': ApiEventEvent;
       'api::home-page.home-page': ApiHomePageHomePage;
+      'api::instructor.instructor': ApiInstructorInstructor;
       'api::program-date.program-date': ApiProgramDateProgramDate;
       'api::retreat-application.retreat-application': ApiRetreatApplicationRetreatApplication;
+      'api::user-comment.user-comment': ApiUserCommentUserComment;
     }
   }
 }
