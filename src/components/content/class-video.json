@@ -6,7 +6,7 @@
   },
   "options": {},
   "attributes": {
-    "videoUrl": {
+    "videoFile": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -20,7 +20,7 @@
     "videoTranscript": {
       "type": "text"
     },
-    "videoAudioFile": {
+    "AudioFile": {
       "type": "media",
       "multiple": false,
       "required": false,

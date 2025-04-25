@@ -11,7 +11,7 @@ export interface ContentClassContent extends Schema.Component {
     additionalMaterials: Attribute.Component<'sections.additional-materials'>;
     video: Attribute.Component<'content.class-video'>;
     writingPrompts: Attribute.Component<'sections.class-section'>;
-    keyConcepts: Attribute.Component<'sections.class-section', true>;
+    keyConcepts: Attribute.Component<'sections.class-section'>;
   };
 }
 
@@ -22,10 +22,10 @@ export interface ContentClassVideo extends Schema.Component {
     description: '';
   };
   attributes: {
-    videoUrl: Attribute.Media;
+    videoFile: Attribute.Media;
     videoDescription: Attribute.Text;
     videoTranscript: Attribute.Text;
-    videoAudioFile: Attribute.Media;
+    AudioFile: Attribute.Media;
     duration: Attribute.Integer;
   };
 }
