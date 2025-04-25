@@ -1,12 +1,12 @@
 {
-  "collectionName": "components_sections_additional_materials",
+  "collectionName": "components_content_class_videos",
   "info": {
-    "displayName": "additionalMaterials",
+    "displayName": "class-video",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "video": {
+    "videoUrl": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -14,10 +14,13 @@
         "videos"
       ]
     },
-    "essay": {
-      "type": "richtext"
+    "videoDescription": {
+      "type": "text"
     },
-    "guidedMeditation": {
+    "videoTranscript": {
+      "type": "text"
+    },
+    "videoAudioFile": {
       "type": "media",
       "multiple": false,
       "required": false,

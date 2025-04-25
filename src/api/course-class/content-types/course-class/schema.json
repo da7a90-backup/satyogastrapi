@@ -15,8 +15,9 @@
     "title": {
       "type": "string"
     },
-    "inClassPosition": {
-      "type": "integer"
+    "orderIndex": {
+      "type": "integer",
+      "min": 1
     },
     "duration": {
       "type": "biginteger"
@@ -27,7 +28,7 @@
       "target": "api::course.course",
       "inversedBy": "course_classes"
     },
-    "classContent": {
+    "content": {
       "displayName": "class_content",
       "type": "component",
       "repeatable": false,

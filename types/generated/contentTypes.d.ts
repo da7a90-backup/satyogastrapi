@@ -952,15 +952,20 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String;
-    inClassPosition: Attribute.Integer;
+    orderIndex: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     duration: Attribute.BigInteger;
     course: Attribute.Relation<
       'api::course-class.course-class',
       'manyToOne',
       'api::course.course'
     >;
-    classContent: Attribute.Component<'content.class-content'> &
-      Attribute.Required;
+    content: Attribute.Component<'content.class-content'> & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_class_sections",
+  "info": {
+    "displayName": "class-section"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "text"
+    },
+    "duration": {
+      "type": "integer"
+    }
+  }
+}

@@ -3,18 +3,30 @@ import type { Schema, Attribute } from '@strapi/strapi';
 export interface ContentClassContent extends Schema.Component {
   collectionName: 'components_content_class_contents';
   info: {
-    displayName: 'class_content';
+    displayName: 'class-content';
     icon: 'briefcase';
+    description: '';
   };
   attributes: {
-    video: Attribute.Media;
-    videoTitle: Attribute.String;
+    additionalMaterials: Attribute.Component<'sections.additional-materials'>;
+    video: Attribute.Component<'content.class-video'>;
+    writingPrompts: Attribute.Component<'sections.class-section'>;
+    keyConcepts: Attribute.Component<'sections.class-section', true>;
+  };
+}
+
+export interface ContentClassVideo extends Schema.Component {
+  collectionName: 'components_content_class_videos';
+  info: {
+    displayName: 'class-video';
+    description: '';
+  };
+  attributes: {
+    videoUrl: Attribute.Media;
     videoDescription: Attribute.Text;
     videoTranscript: Attribute.Text;
     videoAudioFile: Attribute.Media;
-    keyConcepts: Attribute.RichText;
-    writingPrompts: Attribute.RichText;
-    additionalMaterials: Attribute.Component<'sections.additional-materials'>;
+    duration: Attribute.Integer;
   };
 }
 
@@ -22,11 +34,13 @@ export interface SectionsAdditionalMaterials extends Schema.Component {
   collectionName: 'components_sections_additional_materials';
   info: {
     displayName: 'additionalMaterials';
+    description: '';
   };
   attributes: {
     video: Attribute.Media;
     essay: Attribute.RichText;
     guidedMeditation: Attribute.Media;
+    duration: Attribute.Integer;
   };
 }
 
@@ -39,6 +53,17 @@ export interface SectionsButton extends Schema.Component {
     label: Attribute.String;
     url: Attribute.String;
     primary: Attribute.Boolean;
+  };
+}
+
+export interface SectionsClassSection extends Schema.Component {
+  collectionName: 'components_sections_class_sections';
+  info: {
+    displayName: 'class-section';
+  };
+  attributes: {
+    content: Attribute.Text;
+    duration: Attribute.Integer;
   };
 }
 
@@ -238,8 +263,10 @@ declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'content.class-content': ContentClassContent;
+      'content.class-video': ContentClassVideo;
       'sections.additional-materials': SectionsAdditionalMaterials;
       'sections.button': SectionsButton;
+      'sections.class-section': SectionsClassSection;
       'sections.content-section': SectionsContentSection;
       'sections.course-features': SectionsCourseFeatures;
       'sections.cta-section': SectionsCtaSection;
