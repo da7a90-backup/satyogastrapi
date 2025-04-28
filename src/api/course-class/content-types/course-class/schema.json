@@ -34,6 +34,9 @@
       "repeatable": false,
       "component": "content.class-content",
       "required": true
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

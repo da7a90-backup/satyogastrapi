@@ -89,6 +89,18 @@
       "type": "component",
       "repeatable": false,
       "component": "sections.featured-quote"
+    },
+    "introduction": {
+      "type": "richtext"
+    },
+    "addendum": {
+      "type": "richtext"
+    },
+    "enrolledUsers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "enrolledCourses"
     }
   }
 }

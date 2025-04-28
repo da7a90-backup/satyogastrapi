@@ -732,6 +732,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     membershipenddate: Attribute.DateTime;
     membershipstatus: Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'TRIALING']>;
     isAdmin: Attribute.Boolean;
+    enrolledCourses: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::course.course'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -921,6 +926,13 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       Attribute.Required;
     previewMedia: Attribute.Media;
     featuredQuote: Attribute.Component<'sections.featured-quote'>;
+    introduction: Attribute.RichText;
+    addendum: Attribute.RichText;
+    enrolledUsers: Attribute.Relation<
+      'api::course.course',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -966,6 +978,7 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
       'api::course.course'
     >;
     content: Attribute.Component<'content.class-content'> & Attribute.Required;
+    description: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

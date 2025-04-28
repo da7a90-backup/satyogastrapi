@@ -96,6 +96,12 @@
     },
     "isAdmin": {
       "type": "boolean"
+    },
+    "enrolledCourses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::course.course",
+      "inversedBy": "enrolledUsers"
     }
   }
 }
