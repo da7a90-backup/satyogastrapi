@@ -101,6 +101,12 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "mappedBy": "enrolledCourses"
+    },
+    "introVideo": {
+      "displayName": "video-component",
+      "type": "component",
+      "repeatable": false,
+      "component": "content.video-component"
     }
   }
 }

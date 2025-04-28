@@ -933,6 +933,7 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
+    introVideo: Attribute.Component<'content.video-component'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

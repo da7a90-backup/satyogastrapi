@@ -30,6 +30,18 @@ export interface ContentClassVideo extends Schema.Component {
   };
 }
 
+export interface ContentVideoComponent extends Schema.Component {
+  collectionName: 'components_content_video_components';
+  info: {
+    displayName: 'video-component';
+    description: '';
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    video: Attribute.Media & Attribute.Required;
+  };
+}
+
 export interface SectionsAdditionalMaterials extends Schema.Component {
   collectionName: 'components_sections_additional_materials';
   info: {
@@ -264,6 +276,7 @@ declare module '@strapi/types' {
     export interface Components {
       'content.class-content': ContentClassContent;
       'content.class-video': ContentClassVideo;
+      'content.video-component': ContentVideoComponent;
       'sections.additional-materials': SectionsAdditionalMaterials;
       'sections.button': SectionsButton;
       'sections.class-section': SectionsClassSection;
