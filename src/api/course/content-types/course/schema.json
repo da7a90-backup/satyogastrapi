@@ -107,6 +107,15 @@
       "type": "component",
       "repeatable": false,
       "component": "content.video-component"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "course_progresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-progress.course-progress",
+      "mappedBy": "course"
     }
   }
 }

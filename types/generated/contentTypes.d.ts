@@ -737,6 +737,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToMany',
       'api::course.course'
     >;
+    course_progresses: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::course-progress.course-progress'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -934,6 +939,12 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     introVideo: Attribute.Component<'content.video-component'>;
+    subtitle: Attribute.String;
+    course_progresses: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::course-progress.course-progress'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -991,6 +1002,47 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::course-class.course-class',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseProgressCourseProgress extends Schema.CollectionType {
+  collectionName: 'course_progresses';
+  info: {
+    singularName: 'course-progress';
+    pluralName: 'course-progresses';
+    displayName: 'CourseProgress';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::course-progress.course-progress',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    course: Attribute.Relation<
+      'api::course-progress.course-progress',
+      'manyToOne',
+      'api::course.course'
+    >;
+    tracking: Attribute.Component<'tracking.course-progress'>;
+    enrolledDate: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course-progress.course-progress',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course-progress.course-progress',
       'oneToOne',
       'admin::user'
     > &
@@ -1737,6 +1789,7 @@ declare module '@strapi/types' {
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::course.course': ApiCourseCourse;
       'api::course-class.course-class': ApiCourseClassCourseClass;
+      'api::course-progress.course-progress': ApiCourseProgressCourseProgress;
       'api::event.event': ApiEventEvent;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::instructor.instructor': ApiInstructorInstructor;

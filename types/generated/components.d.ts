@@ -49,10 +49,10 @@ export interface SectionsAdditionalMaterials extends Schema.Component {
     description: '';
   };
   attributes: {
-    video: Attribute.Media;
     essay: Attribute.RichText;
     guidedMeditation: Attribute.Media;
     duration: Attribute.Integer;
+    video: Attribute.Media;
   };
 }
 
@@ -72,10 +72,11 @@ export interface SectionsClassSection extends Schema.Component {
   collectionName: 'components_sections_class_sections';
   info: {
     displayName: 'class-section';
+    description: '';
   };
   attributes: {
-    content: Attribute.Text;
     duration: Attribute.Integer;
+    content: Attribute.RichText;
   };
 }
 
@@ -271,6 +272,84 @@ export interface SectionsTab extends Schema.Component {
   };
 }
 
+export interface TrackingClassProgress extends Schema.Component {
+  collectionName: 'components_tracking_class_progresses';
+  info: {
+    displayName: 'ClassProgress';
+    icon: 'chartCircle';
+    description: '';
+  };
+  attributes: {
+    classId: Attribute.Integer & Attribute.Required;
+    orderIndex: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    video: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
+    keyConcepts: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
+    writingPrompts: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
+    additionalMaterials: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          min: 0;
+          max: 1;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
+    completed: Attribute.Boolean & Attribute.DefaultTo<false>;
+    lastAccessed: Attribute.DateTime;
+  };
+}
+
+export interface TrackingCourseProgress extends Schema.Component {
+  collectionName: 'components_tracking_course_progresses';
+  info: {
+    displayName: 'CourseProgress';
+    icon: 'chartCircle';
+    description: '';
+  };
+  attributes: {
+    classes: Attribute.Component<'tracking.class-progress', true>;
+    started: Attribute.Boolean & Attribute.DefaultTo<false>;
+    completed: Attribute.Boolean & Attribute.DefaultTo<false>;
+    startDate: Attribute.DateTime;
+    lastAccessDate: Attribute.DateTime;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
@@ -292,6 +371,8 @@ declare module '@strapi/types' {
       'sections.seo': SectionsSeo;
       'sections.social-links': SectionsSocialLinks;
       'sections.tab': SectionsTab;
+      'tracking.class-progress': TrackingClassProgress;
+      'tracking.course-progress': TrackingCourseProgress;
     }
   }
 }

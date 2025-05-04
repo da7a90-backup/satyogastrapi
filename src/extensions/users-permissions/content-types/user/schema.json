@@ -102,6 +102,12 @@
       "relation": "manyToMany",
       "target": "api::course.course",
       "inversedBy": "enrolledUsers"
+    },
+    "course_progresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-progress.course-progress",
+      "mappedBy": "user"
     }
   }
 }
