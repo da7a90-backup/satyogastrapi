@@ -108,6 +108,12 @@
       "relation": "oneToMany",
       "target": "api::course-progress.course-progress",
       "mappedBy": "user"
+    },
+    "course_comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course-comment.course-comment",
+      "mappedBy": "user"
     }
   }
 }

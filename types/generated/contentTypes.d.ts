@@ -742,6 +742,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::course-progress.course-progress'
     >;
+    course_comments: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::course-comment.course-comment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -945,6 +950,11 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'oneToMany',
       'api::course-progress.course-progress'
     >;
+    course_comments: Attribute.Relation<
+      'api::course.course',
+      'oneToMany',
+      'api::course-comment.course-comment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1002,6 +1012,58 @@ export interface ApiCourseClassCourseClass extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::course-class.course-class',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCourseCommentCourseComment extends Schema.CollectionType {
+  collectionName: 'course_comments';
+  info: {
+    singularName: 'course-comment';
+    pluralName: 'course-comments';
+    displayName: 'CourseComment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::course-comment.course-comment',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    course: Attribute.Relation<
+      'api::course-comment.course-comment',
+      'manyToOne',
+      'api::course.course'
+    >;
+    comment: Attribute.Text & Attribute.Required;
+    sectionType: Attribute.Enumeration<
+      ['testimonial', 'video', 'additionalMaterials']
+    > &
+      Attribute.Required;
+    classIndex: Attribute.Integer &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::course-comment.course-comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::course-comment.course-comment',
       'oneToOne',
       'admin::user'
     > &
@@ -1789,6 +1851,7 @@ declare module '@strapi/types' {
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::course.course': ApiCourseCourse;
       'api::course-class.course-class': ApiCourseClassCourseClass;
+      'api::course-comment.course-comment': ApiCourseCommentCourseComment;
       'api::course-progress.course-progress': ApiCourseProgressCourseProgress;
       'api::event.event': ApiEventEvent;
       'api::home-page.home-page': ApiHomePageHomePage;
